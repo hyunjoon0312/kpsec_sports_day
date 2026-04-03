@@ -84,8 +84,8 @@ function renderReel(prizesToRender) {
     // 여기서는 기본적으로 1세트만 렌더링하고, 스핀 시에 동적으로 릴을 채웁니다.
     prizesToRender.forEach(prize => {
         const div = document.createElement('div');
-        div.className = 'reel-item';
-        div.innerHTML = `<img src="${prize.image}" alt="${prize.name}">`;
+        div.className = 'reel-item is-silhouette';
+        div.innerHTML = `<img src="${prize.image}" alt="${prize.name}" class="silhouette">`;
         reelEl.appendChild(div);
     });
 }
@@ -139,8 +139,8 @@ function spin() {
     reelEl.innerHTML = '';
     spinItems.forEach(prize => {
         const div = document.createElement('div');
-        div.className = 'reel-item';
-        div.innerHTML = `<img src="${prize.image}" alt="${prize.name}">`;
+        div.className = 'reel-item is-silhouette';
+        div.innerHTML = `<img src="${prize.image}" alt="${prize.name}" class="silhouette">`;
         reelEl.appendChild(div);
     });
 
@@ -164,20 +164,32 @@ function spin() {
 
     // 4. 애니메이션 종료 후 처리
     setTimeout(() => {
-        // 당첨 처리
-        showWinner(winningPrize);
-
-        // 데이터 업데이트 (비복원: available에서 제거 후 winners에 추가)
-        availablePrizes.splice(winningIndex, 1);
-        winners.push(winningPrize);
-
-        // UI 업데이트
-        updateUI();
-
-        isSpinning = false;
-        if (availablePrizes.length > 0) {
-            spinBtn.disabled = false;
+        // 마지막 도착 아이템의 실루엣 해제 (긴장감 조성)
+        const lastItem = reelEl.lastElementChild;
+        if (lastItem) {
+            lastItem.classList.remove('is-silhouette');
+            const img = lastItem.querySelector('img');
+            if (img) img.classList.remove('silhouette');
         }
+
+        // 실루엣 공개 효과를 본 뒤, 당첨 화면 표시
+        setTimeout(() => {
+            // 당첨 처리
+            showWinner(winningPrize);
+
+            // 데이터 업데이트 (비복원: available에서 제거 후 winners에 추가)
+            availablePrizes.splice(winningIndex, 1);
+            winners.push(winningPrize);
+
+            // UI 업데이트
+            updateUI();
+
+            isSpinning = false;
+            if (availablePrizes.length > 0) {
+                spinBtn.disabled = false;
+            }
+        }, 800); // 0.8초 동안 실루엣이 본모습을 찾는 모습을 감상
+
     }, spinDuration * 1000 + 500); // 애니메이션 시간 + 약간의 딜레이
 }
 

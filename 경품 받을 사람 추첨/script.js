@@ -126,10 +126,13 @@ function init() {
 }
 
 function updatePrizeDisplay() {
+    const prizeDisplayEl = document.getElementById('prize-display');
     if (currentPrizeIndex < prizes.length) {
         prizeNameEl.textContent = prizes[currentPrizeIndex];
+        prizeDisplayEl.classList.add('silhouette');
     } else {
         prizeNameEl.textContent = '모든 경품 추첨 완료!';
+        prizeDisplayEl.classList.remove('silhouette');
     }
 }
 
@@ -137,6 +140,9 @@ function updateUI() {
     if (currentPrizeIndex >= prizes.length || availableParticipants.length === 0) {
         spinBtn.disabled = true;
         spinBtn.textContent = '추첨 완료';
+    } else {
+        spinBtn.disabled = false;
+        spinBtn.textContent = '추첨하기';
     }
 }
 
@@ -312,20 +318,18 @@ function spin() {
 
     function finishSpin(winnerIndex) {
         const winnerName = availableParticipants[winnerIndex];
+        
+        // 당첨되는 순간 경품 실루엣 해제 (정체 공개)
+        document.getElementById('prize-display').classList.remove('silhouette');
+
         showWinner(winnerName);
 
         availableParticipants.splice(winnerIndex, 1);
         winners.push({ name: winnerName, prize: prizes[currentPrizeIndex] });
 
-        currentPrizeIndex++;
-        updatePrizeDisplay();
-        updateUI();
-
+        // 상태 유지. 인덱스 증가 및 다음 경품 처리는 모달을 닫을 때 수행
         isSpinning = false;
-        if (currentPrizeIndex < prizes.length && availableParticipants.length > 0) {
-            spinBtn.disabled = false;
-        }
-
+        
         drawWheel();
     }
 }
@@ -342,6 +346,11 @@ function showWinner(name) {
 
 winnerCloseBtn.addEventListener('click', () => {
     winnerDisplayEl.style.display = 'none';
+    
+    // 모달을 닫을 때 다음 경품으로 넘어가기
+    currentPrizeIndex++;
+    updatePrizeDisplay();
+    updateUI();
 });
 
 function fireConfetti() {

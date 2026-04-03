@@ -74,6 +74,47 @@ header h1 {
     font-weight: 700;
     color: var(--secondary-color);
     text-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+#prize-name {
+    display: inline-block;
+    transition: filter 0.8s ease, opacity 0.8s ease;
+}
+
+/* ===== 경품 실루엣 모드 ===== */
+.prize-display.silhouette {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5) inset;
+}
+
+.prize-display.silhouette #prize-name {
+    filter: blur(8px) brightness(0);
+    opacity: 0.5;
+    user-select: none;
+}
+
+.prize-display.silhouette::after {
+    content: '???';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 15px var(--secondary-color);
+    letter-spacing: 4px;
+    pointer-events: none;
+    animation: pulseMystery 1.5s infinite;
+}
+
+@keyframes pulseMystery {
+    0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 /* ===== 룰렛 ===== */
