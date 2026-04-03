@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경품 추첨기</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- canvas-confetti 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <button id="history-button" class="history-btn">📋 당첨 히스토리</button>
+    <div class="container">
+
+
+        <!-- 중앙: 슬롯머신 및 컨트롤 -->
+        <main class="main-content">
+            <header>
+                <h1>🎉 데이터담당 운동회 경품 추첨 🎉</h1>
+            </header>
+
+            <div class="slot-machine-container">
+                <div class="slot-machine" id="slot-machine">
+                    <div class="reel" id="reel">
+                        <!-- 자바스크립트로 이미지 아이템들이 동적으로 추가됩니다 -->
+                    </div>
+                </div>
+                <div class="winner-display" id="winner-display" style="display: none;">
+                    <h2 class="winner-title">당첨을 축하합니다!</h2>
+                    <img id="winner-image" src="" alt="당첨 경품">
+                    <p id="winner-name" class="winner-name"></p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="spin-button" class="spin-btn">추첨하기</button>
+            </div>
+
+            <!-- 당첨 히스토리 모달 -->
+            <div class="modal-overlay" id="history-modal" style="display: none;">
+                <div class="modal">
+                    <div class="modal-header">
+                        <h2>🏆 당첨 히스토리</h2>
+                        <button class="modal-close" id="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="history-empty" class="history-empty">아직 당첨 내역이 없습니다.</div>
+                        <table id="history-table" class="history-table" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>순서</th>
+                                    <th>경품</th>
+                                    <th>경품명</th>
+                                    <th>수령자</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

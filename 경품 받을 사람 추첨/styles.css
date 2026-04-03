@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+:root {
+    --primary-color: #e74c3c;
+    --primary-dark: #c0392b;
+    --secondary-color: #f1c40f;
+    --bg-color: #1a1a2e;
+    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --text-color: #ecf0f1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+header {
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--secondary-color);
+    text-shadow: 0 0 20px rgba(241, 196, 15, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 14px;
+    letter-spacing: -1px;
+}
+
+.prize-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 6px;
+}
+
+.prize-display {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(241, 196, 15, 0.15), rgba(243, 156, 18, 0.1));
+    border: 1px solid rgba(241, 196, 15, 0.3);
+    padding: 10px 28px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    text-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* ===== 룰렛 ===== */
+.roulette-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.roulette-pointer {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.4rem;
+    color: var(--primary-color);
+    z-index: 10;
+    filter: drop-shadow(0 2px 6px rgba(231, 76, 60, 0.7));
+    line-height: 1;
+}
+
+#roulette-canvas {
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 8px #333,
+        0 0 0 12px #555,
+        0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ===== 당첨 오버레이 ===== */
+.winner-display {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    animation: fadeIn 0.3s ease;
+}
+
+.winner-card {
+    background: linear-gradient(145deg, #1e2a4a, #16213e);
+    border: 2px solid rgba(241, 196, 15, 0.3);
+    border-radius: 24px;
+    padding: 40px 60px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.winner-title {
+    color: var(--secondary-color);
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    text-shadow: 0 0 15px var(--secondary-color);
+}
+
+.winner-name {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    margin-bottom: 4px;
+}
+
+.winner-prize-info {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 24px;
+}
+
+.winner-close-btn {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    color: #fff;
+    border: none;
+    padding: 10px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+
+.winner-close-btn:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== 버튼 ===== */
+.controls {
+    margin-top: 4px;
+}
+
+.spin-btn {
+    background: linear-gradient(145deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 16px 64px;
+    font-size: 1.6rem;
+    font-weight: 900;
+    font-family: 'Noto Sans KR', sans-serif;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow:
+        0 6px 0 #962d22,
+        0 12px 24px rgba(0, 0, 0, 0.4);
+    transition: all 0.1s;
+    letter-spacing: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.spin-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.spin-btn:hover {
+    background: linear-gradient(145deg, #ec7063, #e74c3c);
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 0 #962d22,
+        0 16px 30px rgba(0, 0, 0, 0.5);
+}
+
+.spin-btn:active {
+    transform: translateY(6px);
+    box-shadow:
+        0 0 0 #962d22,
+        0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.spin-btn:disabled {
+    background: linear-gradient(145deg, #7f8c8d, #6c7a7a);
+    box-shadow: 0 6px 0 #5a6868;
+    cursor: not-allowed;
+}
+
+.spin-btn:disabled::after {
+    display: none;
+}
+
+.spin-btn:disabled:active {
+    transform: none;
+}
+
+/* ===== 반전 이벤트 ===== */
+.twist-event {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    pointer-events: none;
+    animation: twistPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.twist-event span {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow:
+        0 0 20px rgba(255, 0, 0, 0.8),
+        0 0 40px rgba(255, 100, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 16px 32px;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 100, 0, 0.5);
+}
+
+@keyframes twistPop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3) rotate(-10deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2) rotate(3deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+}
+
+.roulette-wrapper.shaking {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10% {
+        transform: translateX(-8px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translateX(8px) rotate(1deg);
+    }
+
+    30% {
+        transform: translateX(-6px) rotate(-0.5deg);
+    }
+
+    40% {
+        transform: translateX(6px) rotate(0.5deg);
+    }
+
+    50% {
+        transform: translateX(-4px);
+    }
+
+    60% {
+        transform: translateX(4px);
+    }
+
+    70% {
+        transform: translateX(-2px);
+    }
+
+    80% {
+        transform: translateX(2px);
+    }
+}

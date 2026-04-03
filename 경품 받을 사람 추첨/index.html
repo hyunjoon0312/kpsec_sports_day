@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인원 추첨기</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <main class="main-content">
+            <header>
+                <h1>🎉 데이터담당 운동회 경품 추첨 🎉</h1>
+                <p class="prize-label">현재 경품</p>
+                <div class="prize-display" id="prize-display">
+                    <span id="prize-name">경품을 설정해주세요</span>
+                </div>
+            </header>
+
+            <div class="roulette-wrapper">
+                <div class="roulette-pointer">▼</div>
+                <canvas id="roulette-canvas" width="500" height="500"></canvas>
+                <div class="twist-event" id="twist-event" style="display: none;">
+                    <span id="twist-text"></span>
+                </div>
+            </div>
+
+            <div class="winner-display" id="winner-display" style="display: none;">
+                <div class="winner-card">
+                    <h2 class="winner-title">🎊 당첨을 축하합니다! 🎊</h2>
+                    <p id="winner-name" class="winner-name"></p>
+                    <p class="winner-prize-info" id="winner-prize-info"></p>
+                    <button id="winner-close" class="winner-close-btn">확인</button>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="spin-button" class="spin-btn">추첨하기</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
